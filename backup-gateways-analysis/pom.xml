@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.smartrplace.analysis</groupId>
+        <artifactId>ogema-backup-parser</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+	<artifactId>backup-gateways-analysis</artifactId>
+	<name>Backup gateways analysis</name>
+	<description>Parses OGEMA gateway resource dumps and log data</description>
+	<packaging>bundle</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.felix</groupId>
+		    <artifactId>org.apache.felix.scr.annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ogema.core</groupId>
+			<artifactId>api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.smartrplace.logging</groupId>
+			<artifactId>fendodb-api</artifactId>
+		</dependency>  
+		<dependency>
+			<groupId>org.smartrplace.analysis</groupId>
+			<artifactId>backup-parser</artifactId>
+			<version>${project.version}</version>
+		</dependency>    
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+            	<groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+			</plugin>
+			<plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                	<instructions>
+                		<Import-Package>
+                			org.smartrplace.logging.fendodb;resolution:=optional,
+                			com.google.common.cache;version="[${guava.version.min},${guava.version.max})",
+                			*
+                		</Import-Package>
+                	</instructions>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+</project>
