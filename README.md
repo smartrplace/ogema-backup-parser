@@ -6,7 +6,7 @@ This repository contains two bundles providing the parsing functionality, and tw
 * `backup-parser`: the low-level parsing API. Pass a file or folder, and it returns the stored resource graph representation.
 * `backup-gateway-analysis`: the slightly more high-level parsing API. Parses a folder for subfolders containing gateway data: zip files of resource graph dumps and the SlotsDb/FendoDb log data folders
 * `memory-gateway-visualisation`: visualisation for `backup-parser`. 
-* `backup-gateway-viz``: visualisation for `backup-gateway-analysis`.
+* `backup-gateway-viz`: visualisation for `backup-gateway-analysis`.
 
 The collective Maven group id is *org.smartrplace.analysis*, the artifact id is the project name.
 
