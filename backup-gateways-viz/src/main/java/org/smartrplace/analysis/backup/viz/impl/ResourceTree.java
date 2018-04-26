@@ -19,7 +19,7 @@ package org.smartrplace.analysis.backup.viz.impl;
 import java.util.List;
 
 import org.ogema.serialization.jaxb.Resource;
-import org.smartrplace.analysis.backup.parser.SubresourceUtils;
+import org.smartrplace.analysis.backup.parserv2.SubresourceUtils;
 
 import de.iwes.widgets.html.tree.NodeDO;
 

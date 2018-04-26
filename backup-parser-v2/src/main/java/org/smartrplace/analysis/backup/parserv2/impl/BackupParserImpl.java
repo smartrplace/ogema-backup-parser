@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.smartrplace.analysis.backup.parser.impl;
+package org.smartrplace.analysis.backup.parserv2.impl;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -45,7 +45,7 @@ import org.apache.felix.scr.annotations.Service;
 import org.ogema.serialization.jaxb.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.smartrplace.analysis.backup.parser.BackupParser;
+import org.smartrplace.analysis.backup.parserv2.BackupParser;
 
 @Component
 @Service(BackupParser.class)

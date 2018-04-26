@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 import org.osgi.framework.BundleContext;
 import org.slf4j.LoggerFactory;
-import org.smartrplace.analysis.backup.parser.BackupParser;
+import org.smartrplace.analysis.backup.parserv2.BackupParser;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

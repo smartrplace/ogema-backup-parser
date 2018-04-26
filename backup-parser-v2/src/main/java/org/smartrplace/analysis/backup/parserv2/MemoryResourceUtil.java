@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.smartrplace.analysis.backup.parser;
+package org.smartrplace.analysis.backup.parserv2;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -37,7 +37,7 @@ import org.ogema.serialization.jaxb.StringArrayResource;
 import org.ogema.serialization.jaxb.StringResource;
 import org.ogema.serialization.jaxb.TimeArrayResource;
 import org.ogema.serialization.jaxb.TimeResource;
-import org.smartrplace.analysis.backup.parser.impl.ResourceLinkImpl;
+import org.smartrplace.analysis.backup.parserv2.impl.ResourceLinkImpl;
 
 public class MemoryResourceUtil {
 	

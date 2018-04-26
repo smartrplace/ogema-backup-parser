@@ -48,9 +48,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.slf4j.LoggerFactory;
 import org.smartrplace.analysis.backup.parser.api.MemoryGateway;
-import org.smartrplace.analysis.backup.parser.BackupParser;
-import org.smartrplace.analysis.backup.parser.MemoryResourceUtil;
-import org.smartrplace.analysis.backup.parser.TreeAnalyzer.RoomAnalyzer;
+import org.smartrplace.analysis.backup.parserv2.BackupParser;
+import org.smartrplace.analysis.backup.parserv2.MemoryResourceUtil;
+import org.smartrplace.analysis.backup.parserv2.TreeAnalyzer.RoomAnalyzer;
 
 /**
  * A gateway that is known from its resource backup files and/or log data backups. 

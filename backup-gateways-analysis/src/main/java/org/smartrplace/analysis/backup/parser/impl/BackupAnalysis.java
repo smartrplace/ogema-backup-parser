@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smartrplace.analysis.backup.parser.api.GatewayBackupAnalysis;
 import org.smartrplace.analysis.backup.parser.api.MemoryGateway;
-import org.smartrplace.analysis.backup.parser.BackupParser;
+import org.smartrplace.analysis.backup.parserv2.BackupParser;
 
 @Component
 @Service(GatewayBackupAnalysis.class)

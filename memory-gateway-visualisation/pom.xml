@@ -41,7 +41,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.smartrplace.analysis</groupId>
-			<artifactId>backup-parser</artifactId>
+			<artifactId>backup-parser-v2</artifactId>
 			<version>${project.version}</version>
 		</dependency>   
 	</dependencies>

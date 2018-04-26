@@ -21,7 +21,7 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.ogema.core.application.Application;
 import org.ogema.core.application.ApplicationManager;
-import org.smartrplace.analysis.backup.parser.BackupParser;
+import org.smartrplace.analysis.backup.parserv2.BackupParser;
 
 import de.iwes.widgets.api.OgemaGuiService;
 import de.iwes.widgets.api.widgets.WidgetApp;

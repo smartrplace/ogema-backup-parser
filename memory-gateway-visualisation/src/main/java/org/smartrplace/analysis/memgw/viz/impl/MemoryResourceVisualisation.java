@@ -27,9 +27,9 @@ import java.util.Map;
 
 import org.ogema.serialization.jaxb.Resource;
 import org.ogema.serialization.jaxb.ResourceLink;
-import org.smartrplace.analysis.backup.parser.BackupParser;
-import org.smartrplace.analysis.backup.parser.MemoryResourceUtil;
-import org.smartrplace.analysis.backup.parser.SubresourceUtils;
+import org.smartrplace.analysis.backup.parserv2.BackupParser;
+import org.smartrplace.analysis.backup.parserv2.MemoryResourceUtil;
+import org.smartrplace.analysis.backup.parserv2.SubresourceUtils;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

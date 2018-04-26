@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-	<artifactId>backup-parser</artifactId>
+	<artifactId>backup-parser-v2</artifactId>
 	<name>Backup parser</name>
 	<description>Parses OGEMA resource graph dumps (in XML format)</description>
 	<packaging>bundle</packaging>

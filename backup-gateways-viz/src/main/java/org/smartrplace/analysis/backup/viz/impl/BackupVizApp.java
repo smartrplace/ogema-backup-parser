@@ -48,7 +48,7 @@ public class BackupVizApp implements Application {
 	@Override
 	public void start(ApplicationManager appMan) {
 		basePath = Paths.get(System.getProperty("org.smartrplace.analysis.backup.parser.basepath", "ogemaCollect/rest"));
-		wapp = widgetService.createWidgetApp("/org/smartrplace/analysis/backup/parser", appMan);
+		wapp = widgetService.createWidgetApp("/org/smartrplace/analysis/backup/parserv2", appMan);
 		WidgetPage<?> page = wapp.createStartPage();
 		new VisualizationPage(page, backupAnalysis, basePath, appMan);
 	}
