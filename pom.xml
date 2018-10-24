@@ -50,7 +50,7 @@
 		<maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
 		<!-- max versions exclusive -->
 		<guava.version.min>19.0</guava.version.min>
-		<guava.version.max>26.0</guava.version.max>
+		<guava.version.max>27.0</guava.version.max>
 		<felix.service.command.version.min>0.0.0</felix.service.command.version.min>
 		<felix.service.command.version.max>2.0.0</felix.service.command.version.max>
 	</properties>
@@ -88,7 +88,7 @@
 					<groupId>org.apache.felix</groupId>
 					<artifactId>maven-bundle-plugin</artifactId>
 					<extensions>true</extensions>
-					<version>3.3.0</version>
+					<version>4.0.0</version>
 					<executions>
 						<execution>
 							<id>bundle-manifest</id>
@@ -325,7 +325,7 @@
 			<dependency>
 				<groupId>org.smartrplace.logging</groupId>
 				<artifactId>fendodb-api</artifactId>
-				<version>0.0.3-SNAPSHOT</version>
+				<version>0.0.3</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
