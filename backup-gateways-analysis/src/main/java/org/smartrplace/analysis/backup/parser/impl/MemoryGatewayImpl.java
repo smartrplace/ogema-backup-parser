@@ -165,7 +165,10 @@ class MemoryGatewayImpl implements MemoryGateway {
 			if (ref == null)
 				return Optional.empty();
 			final org.smartrplace.logging.fendodb.FendoDbFactory factory = (org.smartrplace.logging.fendodb.FendoDbFactory) ctx.getService(ref);
-			return Optional.of(factory.getInstance(basePath.resolve("slotsdb")));
+			return Optional.of(factory.getInstance(basePath.resolve("slotsdb"), org.smartrplace.logging.fendodb.FendoDbConfigurationBuilder.getInstance()
+					.setParseFoldersOnInit(true)
+					.setReadOnlyMode(true)
+					.build()));
 		} catch (NoClassDefFoundError | IOException e) {
 			return Optional.empty();
 		}
