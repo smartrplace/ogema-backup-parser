@@ -31,11 +31,11 @@
 			<artifactId>api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.iwes.widgets</groupId>
+			<groupId>org.ogema.widgets</groupId>
 			<artifactId>ogema-gui-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.iwes.widgets</groupId>
+			<groupId>org.ogema.widgets</groupId>
 			<artifactId>widget-experimental</artifactId>
 		</dependency>
 		<dependency>

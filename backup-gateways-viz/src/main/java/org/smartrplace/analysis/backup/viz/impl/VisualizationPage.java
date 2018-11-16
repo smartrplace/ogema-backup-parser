@@ -69,11 +69,16 @@ import de.iwes.widgets.html.form.dropdown.TemplateDropdown;
 import de.iwes.widgets.html.form.label.Header;
 import de.iwes.widgets.html.form.label.HeaderData;
 import de.iwes.widgets.html.multiselect.TemplateMultiselect;
+import de.iwes.widgets.html.plot.api.PlotType;
 import de.iwes.widgets.html.tree.NodeDO;
 import de.iwes.widgets.html.tree.Tree;
 import de.iwes.widgets.resource.widget.init.InitUtil;
+import de.iwes.widgets.reswidget.scheduleplot.flot.SchedulePlotFlot;
+import de.iwes.widgets.reswidget.scheduleplot.plotchartjs.SchedulePlotChartjs;
+import de.iwes.widgets.reswidget.scheduleplot.plotlyjs.SchedulePlotlyjs;
 import de.iwes.widgets.reswidget.scheduleviewer.ScheduleViewerBasic;
 import de.iwes.widgets.reswidget.scheduleviewer.api.ScheduleViewerConfiguration;
+import de.iwes.widgets.reswidget.scheduleviewer.api.ScheduleViewerConfigurationBuilder;
 import de.iwes.widgets.template.DisplayTemplate;
 
 class VisualizationPage {
@@ -281,7 +286,17 @@ class VisualizationPage {
 				}
 			}
 		};
-		final ScheduleViewerConfiguration svconfig = new ScheduleViewerConfiguration(false, false, true, false, null, false, 2 *24 * 3600*1000L, 0L, null, null, 24*60*60*1000L);
+		final ScheduleViewerConfiguration svconfig = ScheduleViewerConfigurationBuilder.newBuilder()
+			.setShowCsvDownload(false)
+			.setStartTime(2 *24 * 3600*1000L)
+			.setEndTime(0L)
+			.setShowPlotTypeSelector(true)
+//			.setPlotLibrary(SchedulePlotlyjs.class) // unfortunately not working yet... the plot is too small in the accordion
+//			.setPlotLibrary(SchedulePlotChartjs.class)
+			.setPlotLibrary(SchedulePlotFlot.class)
+			.build();
+			
+//		final ScheduleViewerConfiguration svconfig = new ScheduleViewerConfiguration(false, false, true, false, null, false, 2 *24 * 3600*1000L, 0L, null, null, 24*60*60*1000L);
 		this.logDataViewer = new ScheduleViewerBasic<FendoTimeSeries>(page, "scheduleViewer", am, svconfig, template) {
 
 			private static final long serialVersionUID = 1L;
@@ -353,6 +368,7 @@ class VisualizationPage {
 			};
 			
 		};
+		logDataViewer.getDefaultPlotConfiguration().setPlotType(PlotType.LINE);
 		this.downloadStartPicker = new Datepicker(page, "downloadStartPicker");
 		this.downloadEndPicker = new Datepicker(page, "downloadEndPicker");
 		this.completeDataset = new Checkbox(page, "completeDataset") {

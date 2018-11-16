@@ -14,9 +14,9 @@
 	<inceptionYear>2017</inceptionYear>
 	<licenses>
 		<license>
-			<name>The GNU General Public License, Version 3.0</name>
-			<url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
-			<distribution>manual</distribution>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
 		</license>
 	</licenses>
 
@@ -43,14 +43,14 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<osgi.version>5.0.0</osgi.version>
-		<ogema.api.version>2.1.3</ogema.api.version>
-		<ogema.widgets.version>2.1.3</ogema.widgets.version>
+		<ogema.api.version>2.2.0</ogema.api.version>
+		<ogema.widgets.version>2.2.0</ogema.widgets.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
 		<!-- max versions exclusive -->
 		<guava.version.min>19.0</guava.version.min>
-		<guava.version.max>27.0</guava.version.max>
+		<guava.version.max>28.0</guava.version.max>
 		<felix.service.command.version.min>0.0.0</felix.service.command.version.min>
 		<felix.service.command.version.max>2.0.0</felix.service.command.version.max>
 	</properties>
@@ -70,7 +70,7 @@
 				<plugin>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>maven-scr-plugin</artifactId>
-					<version>1.24.0</version>
+					<version>1.26.0</version>
 					<configuration>
 						<outputDirectory>${project.build.outputDirectory}</outputDirectory>
 					</configuration>
@@ -285,27 +285,27 @@
 
 			<!-- OGEMA widget framework -->
 			<dependency>
-				<groupId>de.iwes.widgets</groupId>
+				<groupId>org.ogema.widgets</groupId>
 				<artifactId>ogema-gui-api</artifactId>
 				<version>${ogema.widgets.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>de.iwes.widgets</groupId>
+				<groupId>org.ogema.widgets</groupId>
 				<artifactId>ogema-js-bundle</artifactId>
 				<version>${ogema.widgets.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>de.iwes.widgets</groupId>
+				<groupId>org.ogema.widgets</groupId>
 				<artifactId>widget-collection</artifactId>
 				<version>${ogema.widgets.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>de.iwes.widgets</groupId>
+				<groupId>org.ogema.widgets</groupId>
 				<artifactId>widget-extended</artifactId>
 				<version>${ogema.widgets.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>de.iwes.widgets</groupId>
+				<groupId>org.ogema.widgets</groupId>
 				<artifactId>widget-experimental</artifactId>
 				<version>${ogema.widgets.version}</version>
 			</dependency>
@@ -325,7 +325,7 @@
 			<dependency>
 				<groupId>org.smartrplace.logging</groupId>
 				<artifactId>fendodb-api</artifactId>
-				<version>0.0.4-SNAPSHOT</version>
+				<version>0.0.4-SNAPSHOT</version><!-- FIXME -->
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
