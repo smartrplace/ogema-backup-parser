@@ -88,6 +88,8 @@ class GatewaysController {
 					return Collections.emptyList();
 				if (paths != null && lastPathsUpdate.get() - now < 60000) 
 					return Collections.unmodifiableList(paths);
+				if (!Files.isDirectory(base))
+					return Collections.emptyList();
 				try {
 					List<Path> newpaths = Files.list(base).filter(path -> Files.isDirectory(path)).collect(Collectors.toList());
 					lastPathsUpdate.set(now);
