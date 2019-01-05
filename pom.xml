@@ -5,7 +5,7 @@
 
 	<groupId>org.smartrplace.analysis</groupId>
 	<artifactId>ogema-backup-parser</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>OGEMA backup parser</name>
 	<description>Tools for analysing resource graph dumps and log data from OGEMA gateways</description>
 	<packaging>pom</packaging>
