@@ -5,7 +5,7 @@
 
 	<groupId>org.smartrplace.analysis</groupId>
 	<artifactId>ogema-backup-parser</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>OGEMA backup parser</name>
 	<description>Tools for analysing resource graph dumps and log data from OGEMA gateways</description>
 	<packaging>pom</packaging>
@@ -24,21 +24,8 @@
 		<connection>scm:git:git://github.com/smartrplace/ogema-backup-parser.git</connection>
 		<developerConnection>scm:git:git://github.com/smartrplace/ogema-backup-parser.git</developerConnection>
 		<url>https://github.com/smartrplace/ogema-backup-parser</url>
-		<tag>HEAD</tag>
+		<tag>0.0.2</tag>
 	</scm>
-
-	<!-- TODO remove once all dependencies are available from Maven central -->
-	<repositories>
-		<repository>
-			<releases />
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>ogema-releases</id>
-			<name>ogema-releases</name>
-			<url>https://www.ogema-source.net/artifactory/libs-release</url>
-		</repository>
-	</repositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -144,7 +131,7 @@
 						<header>header.txt</header>
 						<keywords> <!-- existing license headers contain all of these keywords -->
 							<keyword>Smartrplace</keyword>
-							<keyword>GNU</keyword>
+							<keyword>Apache</keyword>
 							<keyword>License</keyword>
 						</keywords>
 						<properties>
@@ -215,7 +202,20 @@
 				         <additionalOptions>-Xdoclint:none</additionalOptions>
 				      </configuration>
 				</plugin>
-
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.6</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
@@ -325,9 +325,45 @@
 			<dependency>
 				<groupId>org.smartrplace.logging</groupId>
 				<artifactId>fendodb-api</artifactId>
-				<version>0.0.4-SNAPSHOT</version><!-- FIXME -->
+				<version>0.1.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
+	<profiles>
+	<!-- Sign and deploy locally, for testing. Usage: mvn -Psign install -DskipTests 
+			-o -->
+		<profile>
+			<id>sign</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<!-- Generate source, javadoc, sign and deploy. Usage: 
+				mvn -Psign-and-deploy deploy -DskipTests -Dadditionalparam=-Xdoclint:none -Dgpg.keyname=smartrplace-->
+			<id>sign-and-deploy</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

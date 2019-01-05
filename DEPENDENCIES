@@ -24,7 +24,7 @@ From: 'QOS.ch' (http://www.qos.ch)
 From: 'Fraunhofer Gesellschaft' (https://www.fraunhofer.de/)
   - OGEMA (http://www.ogema.org), multiple artifacts
   - OGEMA widgets framework (http://www.ogema.org), multiple artifacts
-    License: GPL, Version 3.0  (https://www.gnu.org/licenses/gpl-3.0.en.html)
+    License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 From 'joda.org' (http://www.joda.org)
   - Joda time (http://www.joda.org/joda-time/) joda-time:joda-time:jar:2.9.9
