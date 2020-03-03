@@ -85,7 +85,7 @@ public class BackupParserImpl implements BackupParser {
 	}
 	
 	private List<Resource> parseZipFile(Path folder, boolean recursive) throws IOException {
-		try (FileSystem fs = FileSystems.newFileSystem(folder, null)) {
+		try (FileSystem fs = FileSystems.newFileSystem(folder, (ClassLoader)null)) {
 			final Path root = fs.getPath("/");
 			final int maxDepth = (recursive ? Integer.MAX_VALUE : 1);
 			// sometimes fails with funny IOExceptions... see https://stackoverflow.com/questions/14654737/nosuchfileexception-while-walking-files-tree-inside-a-zip-using-java-nio
