@@ -55,6 +55,7 @@ public interface MemoryGateway {
 	 */
 	Optional<DataRecorder> getLogdata();
 	Optional<Map<String,Resource>> getAllRooms();
+	Optional<Map<String,Resource>> getAllInstallAppDevices();
 	Optional<Map<String,Resource>> getAllDevices();
 	// TODO check: does this only return toplevel devices?
 	Optional<List<Resource>> getDevicesByRoom(Resource room);

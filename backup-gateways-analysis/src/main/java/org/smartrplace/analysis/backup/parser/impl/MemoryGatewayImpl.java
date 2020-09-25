@@ -32,9 +32,13 @@ import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 
 import org.ogema.model.actors.RemoteControl;
+import org.ogema.model.devices.buildingtechnology.AirConditioner;
 import org.ogema.model.devices.buildingtechnology.Thermostat;
+import org.ogema.model.devices.connectiondevices.ElectricityConnectionBox;
+import org.ogema.model.devices.generators.PVPlant;
 import org.ogema.model.devices.sensoractordevices.SensorDevice;
 import org.ogema.model.devices.sensoractordevices.SingleSwitchBox;
+import org.ogema.model.devices.storage.ElectricityChargingStation;
 import org.ogema.model.locations.Room;
 import org.ogema.model.prototypes.PhysicalElement;
 import org.ogema.model.sensors.DoorWindowSensor;
@@ -47,8 +51,10 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.slf4j.LoggerFactory;
 import org.smartrplace.analysis.backup.parser.api.MemoryGateway;
+import org.smartrplace.analysis.backup.parser.util.MemoryResourceUtilSimple;
 import org.smartrplace.analysis.backup.parserv2.BackupParser;
 import org.smartrplace.analysis.backup.parserv2.MemoryResourceUtil;
+import org.smartrplace.analysis.backup.parserv2.TreeAnalyzer;
 import org.smartrplace.analysis.backup.parserv2.TreeAnalyzer.RoomAnalyzer;
 
 /**
@@ -65,8 +71,10 @@ class MemoryGatewayImpl implements MemoryGateway {
 	private final BundleContext ctx;
 	private final Path basePath;
 	private volatile Map<String,Resource> rooms = null; // cache, populated upon first access
+	private volatile Map<String,Resource> installAppDevices = null; // cache, populated upon first access
 	private volatile Map<String,Resource> devices = null; // cache
 	private volatile Map<String, String> roomsByDevices = null; // cache
+	private volatile Map<String, String> installAppByDevices = null; // cache
 	
 	MemoryGatewayImpl(String id, Path basePath, BackupParser parser, BundleContext ctx) throws IOException, UncheckedIOException {
 		this.id = id;
@@ -128,6 +136,7 @@ class MemoryGatewayImpl implements MemoryGateway {
 		return id;
 	}
 	
+	@Override
 	public Optional<List<Resource>> getAllResources() {
 		final List<Resource> resources = getResources();
 		return resources != null ? Optional.of(resources) : Optional.empty();
@@ -158,6 +167,7 @@ class MemoryGatewayImpl implements MemoryGateway {
 		return Optional.of(target);
 	}
 	
+	@Override
 	public Optional<DataRecorder> getLogdata() {
 		try {
 			final ServiceReference<?> ref = ctx.getServiceReference(org.smartrplace.logging.fendodb.FendoDbFactory.class);
@@ -173,6 +183,7 @@ class MemoryGatewayImpl implements MemoryGateway {
 		}
 	}
 	
+	@Override
 	public Optional<Map<String,Resource>> getAllRooms() {
 		if (rooms != null) 
 			return Optional.of(rooms);
@@ -187,6 +198,23 @@ class MemoryGatewayImpl implements MemoryGateway {
 		return Optional.of(rooms);
 	}
 	
+	@Override
+	public Optional<Map<String,Resource>> getAllInstallAppDevices() {
+		if (installAppDevices != null) 
+			return Optional.of(installAppDevices);
+		final List<Resource> resources = getResources();
+		if (resources == null)
+			return Optional.empty();
+		synchronized (resources) {
+			if (installAppDevices != null) 
+				return Optional.of(installAppDevices);
+			installAppDevices = Collections.unmodifiableMap(
+					MemoryResourceUtil.findResources(resources, resource -> MemoryResourceUtilSimple.INSTALL_APP_DEVICE_CLASS_NAME.equals(resource.getType()), true));
+		}
+		return Optional.of(installAppDevices);
+	}
+
+	@Override
 	public Optional<Map<String,Resource>> getAllDevices() {
 		if (devices != null) 
 			return Optional.of(devices);
@@ -202,6 +230,7 @@ class MemoryGatewayImpl implements MemoryGateway {
 		return Optional.of(devices);
 	}
 	
+	@Override
 	public Optional<List<Resource>> getDevicesByRoom(Resource room) {
 		final List<Resource> resources = getResources();
 		if (resources == null)
@@ -233,8 +262,11 @@ class MemoryGatewayImpl implements MemoryGateway {
 	
 	// XXX TODO
 	private static final List<Class<? extends org.ogema.core.model.Resource>> deviceTypes = 
-			Arrays.asList(PhysicalElement.class, Thermostat.class, TemperatureSensor.class, HumiditySensor.class, OccupancySensor.class, SensorDevice.class, 
-					SingleSwitchBox.class, RemoteControl.class, DoorWindowSensor.class);
+			Arrays.asList(PhysicalElement.class, Thermostat.class, TemperatureSensor.class,
+					HumiditySensor.class, OccupancySensor.class, SensorDevice.class, 
+					SingleSwitchBox.class, RemoteControl.class, DoorWindowSensor.class,
+					AirConditioner.class, ElectricityConnectionBox.class,
+					ElectricityChargingStation.class, PVPlant.class);
 	
 	
 	private static Optional<Path> getLatestBackup(Path base) throws IOException {
