@@ -170,4 +170,27 @@ public class MemoryResourceUtilSimple {
 		Resource valRes = res.get(name);
 		return MemoryResourceUtil.getValue(valRes);
 	}
+	
+	/**Like getHumanReadableName, but just return Resource.getName when no other name is specified*/
+	public static String getHumanReadableShortName(Resource resource) {
+		final String name = getNameResourceValue(resource);
+		return name != null ? name : resource.getName();		
+	}
+	
+	/**
+	 * Get the trimmed value of the "name" subresource, if it exists, is active, is a StringResource,
+	 * and has a non-empty value. Otherwise returns null.
+	 * @param resource
+	 * @return
+	 */
+	public static String getNameResourceValue(Resource resource) {
+		if (resource == null)
+			return null;
+		String val = getSubResourceValue(resource, "name");
+		if(val == null)
+			return null;
+		val = val.trim();
+		return val.isEmpty() ? null: val;
+	}
+
 }
