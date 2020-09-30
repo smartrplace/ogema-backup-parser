@@ -16,9 +16,12 @@
 package org.smartrplace.analysis.backup.parserv2.impl;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitOption;
@@ -37,26 +40,27 @@ import javax.xml.bind.JAXBException;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Service;
 import org.ogema.serialization.jaxb.Resource;
+import org.ogema.tools.impl.JsonReaderJackson;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smartrplace.analysis.backup.parserv2.BackupParser;
 
 @Component
-@Service(BackupParser.class)
 public class BackupParserImpl implements BackupParser {
 	
 	private volatile JAXBContext jaxbContext;
 	private final static Logger logger=  LoggerFactory.getLogger(BackupParserImpl.class);
+    private JsonReaderJackson json;    
 	
 	@Activate
 	protected void activate() throws JAXBException {
 			jaxbContext = JAXBContext.newInstance("org.ogema.serialization.jaxb",
 					org.ogema.serialization.jaxb.Resource.class.getClassLoader());
+        json = new JsonReaderJackson();
 	}
 	
 	@Deactivate
@@ -104,21 +108,30 @@ public class BackupParserImpl implements BackupParser {
 				
 				@Override
 				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-					
-					if (!Files.isRegularFile(file))
+					if (!Files.isRegularFile(file)) {
 						return FileVisitResult.CONTINUE;
+                    }
 					final String filename = file.getFileName().toString().toLowerCase();
-					if (!filename.endsWith(".ogx") && !filename.endsWith(".xml"))
-						return FileVisitResult.CONTINUE;
-					try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(file))) {
-						final Resource r = parse(bis);
-						if (r != null)
-							result.add(r);
-					} catch (IOException e) {
-						logger.warn("Parsing file {} failed. {}",file,e.toString());
-					}
+                    if (filename.endsWith(".ogx") || filename.endsWith(".xml")) {
+                        try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(file))) {
+                            final Resource r = parse(bis);
+                            if (r != null) {
+                                result.add(r);
+                            }
+                        } catch (IOException e) {
+                            logger.warn("Parsing file {} failed. {}", file, e.toString());
+                        }
+                    } else if (filename.endsWith(".ogj") || filename.endsWith(".json")) {
+                        try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(file))) {
+                            final Resource r = parseJson(bis);
+                            if (r != null) {
+                                result.add(r);
+                            }
+                        } catch (IOException e) {
+                            logger.warn("Parsing file {} failed. {}", file, e.toString());
+                        }
+                    }
 					return FileVisitResult.CONTINUE;
-				
 				}
 				
 				@Override
@@ -131,22 +144,31 @@ public class BackupParserImpl implements BackupParser {
 			return result;
 		}
 	}
+    
+    private Resource parseAny(Path file) throws IOException {
+        if (file.toString().endsWith(".ogx") || file.toString().endsWith(".xml")) {
+            return parse(file);
+        } else if (file.toString().endsWith(".ogj") || file.toString().endsWith(".json")) {
+            return parseJson(Files.newInputStream(file));
+        } else {
+            return null;
+        }
+    }
 	
 	private List<Resource> parseActualFolder(Path folder, boolean recursive) throws IOException {
-		List<Resource> results = Files.list(folder).filter(file -> Files.isRegularFile(file) && 
-					(file.toString().endsWith(".ogx") || file.toString().endsWith(".xml"))).map(file -> {
+		List<Resource> results = Files.list(folder).filter(file -> Files.isRegularFile(file)).map(file -> {
 			try {
-				return parse(file);
+				return parseAny(file);
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
-		}).collect(Collectors.toList());
+		}).filter(r -> r != null).collect(Collectors.toList());
 		if (recursive) {
 			Files.list(folder).filter(file -> Files.isDirectory(file)).forEach(file -> {
 				try {
 					results.addAll(parseFolder(file, recursive));
 				} catch (IOException e) {
-					return;
+                    logger.debug("exception during parsing {}", file, e);
 				}
 			});
 		}		
@@ -157,6 +179,15 @@ public class BackupParserImpl implements BackupParser {
 	public Resource parse(InputStream stream) throws IOException {
 		return parse(new StreamSource(stream));
 	}
+    
+    private Resource parseJson(InputStream is) throws IOException {
+        try (InputStreamReader r = new InputStreamReader(is, StandardCharsets.UTF_8);
+                BufferedReader br = new BufferedReader(r)) {
+            return json.read(br);
+        } catch (ClassNotFoundException e) {
+            throw new IOException(e);
+        }
+    }
 	
 	@Override
 	public Resource parse(String xml) throws IOException {
