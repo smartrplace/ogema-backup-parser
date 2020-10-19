@@ -157,10 +157,10 @@ public class MemoryResourceUtilSimple {
 	
 	public static Resource getInstallAppResource(Resource device, MemoryResourcePreAnalysis preData) {
 		for(Resource appInstall: preData.allInstallAppDevices.values()) {
-			device = getDeviceResourceByAppInstall(appInstall, preData);
-			if(device == null)
+			Resource deviceToTest = getDeviceResourceByAppInstall(appInstall, preData);
+			if(deviceToTest == null)
 				continue;
-			if(device.getPath().equals(device.getPath()))
+			if(deviceToTest.getPath().equals(device.getPath()))
 				return appInstall;
 		}
 		return null;
