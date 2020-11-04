@@ -197,8 +197,8 @@ public class BackupParserImpl implements BackupParser {
 	@SuppressWarnings("rawtypes")
 	private Resource parse(Source src) throws IOException {
 		try {
-			return (org.ogema.serialization.jaxb.Resource) ((JAXBElement) jaxbContext.createUnmarshaller()
-					.unmarshal(src)).getValue();
+			return jaxbContext.createUnmarshaller()
+					.unmarshal(src, org.ogema.serialization.jaxb.Resource.class).getValue();
 		} catch (JAXBException ex) {
 			throw new IOException(ex);
 		}
