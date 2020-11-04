@@ -102,7 +102,7 @@ class MemoryGatewayImpl implements MemoryGateway {
 							return;
 						}
 						Path latestBackup = opt.get();
-						r = Collections.unmodifiableList(parser.parseFolder(latestBackup,true));
+						r = Collections.unmodifiableList(parser.parseFolder(latestBackup,false));
 //					if (logData == null && r == null)
 //						throw new IOException("Gateway " + id + " not found");
 						if (r == null && !Files.exists(basePath.resolve("slotsdb")))
