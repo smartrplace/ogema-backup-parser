@@ -113,6 +113,17 @@ public class MemoryResourceUtilSimple {
 		return result;
 	}
 	
+	public static Resource getParent(Resource res, MemoryGateway memGw ) {
+		String[] els = res.getPath().split("/");
+		if(els.length < 2)
+			return null;
+		String parentPath = els[0];
+		for(int i=1; i<els.length-1; i++) {
+			parentPath += "/"+els[i];
+		}
+		return MemoryResourceUtilSimple.getResource(memGw, parentPath);
+	}
+	
 	/** Get a device that is a super-resource of res that contains room information
 	 * 
 	 * @param res

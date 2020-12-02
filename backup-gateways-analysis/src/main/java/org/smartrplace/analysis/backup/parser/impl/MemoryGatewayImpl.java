@@ -38,6 +38,7 @@ import org.ogema.model.devices.connectiondevices.ElectricityConnectionBox;
 import org.ogema.model.devices.generators.PVPlant;
 import org.ogema.model.devices.sensoractordevices.SensorDevice;
 import org.ogema.model.devices.sensoractordevices.SingleSwitchBox;
+import org.ogema.model.devices.storage.ChargingPoint;
 import org.ogema.model.devices.storage.ElectricityChargingStation;
 import org.ogema.model.locations.Room;
 import org.ogema.model.prototypes.PhysicalElement;
@@ -225,7 +226,8 @@ class MemoryGatewayImpl implements MemoryGateway {
 			if (devices != null) 
 				return Optional.of(devices);
 			devices = Collections.unmodifiableMap(MemoryResourceUtil.findResources(resources, resource -> 
-					deviceTypes.stream().map(clzz -> clzz.getName()).collect(Collectors.toList()).contains(resource.getType()), true));
+					deviceTypeNames.stream().collect(Collectors.toList()).contains(resource.getType()), true));
+					//deviceTypes.stream().map(clzz -> clzz.getName()).collect(Collectors.toList()).contains(resource.getType()), true));
 		}
 		return Optional.of(devices);
 	}
@@ -266,8 +268,14 @@ class MemoryGatewayImpl implements MemoryGateway {
 					HumiditySensor.class, OccupancySensor.class, SensorDevice.class, 
 					SingleSwitchBox.class, RemoteControl.class, DoorWindowSensor.class,
 					AirConditioner.class, ElectricityConnectionBox.class,
-					ElectricityChargingStation.class, PVPlant.class);
-	
+					ElectricityChargingStation.class, PVPlant.class, ChargingPoint.class);
+	private static final List<String> deviceTypeNames = new ArrayList<>();
+	static {
+		for(Class<? extends org.ogema.core.model.Resource> type: deviceTypes) {
+			deviceTypeNames.add(type.getName());
+			deviceTypeNames.add("de.iwes.ogema.bacnet.models.BACnetDevice");
+		}
+	}
 	
 	private static Optional<Path> getLatestBackup(Path base) throws IOException {
 		return Files.list(base).filter(path -> Files.isRegularFile(path) && path.getFileName().toString().toLowerCase().endsWith(".zip"))
