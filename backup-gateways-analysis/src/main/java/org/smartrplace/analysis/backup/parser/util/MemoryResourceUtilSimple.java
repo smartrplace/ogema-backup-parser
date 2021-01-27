@@ -132,15 +132,20 @@ public class MemoryResourceUtilSimple {
 	 */
 	public static Resource getDeviceWithRoomForResource(Resource res, MemoryResourcePreAnalysis preData) {
 		String path = res.getPath();
+		Resource result = null;
 		for(Entry<String, Resource> e: preData.roomByDevice.entrySet()) {
 			if(path.startsWith(e.getKey()))
-				return preData.allDevices.get(e.getKey());
+				if(result == null || result.getPath().length() > e.getKey().length())
+					result = preData.allDevices.get(e.getKey());
 		}
+		if(result != null)
+			return result;
 		for(Entry<String, Resource> e: preData.allDevices.entrySet()) {
 			if(path.startsWith(e.getKey()))
-				return e.getValue();			
+				if(result == null || result.getPath().length() > e.getKey().length())
+					result = e.getValue();			
 		}
-		return null;
+		return result;
 	}
 	public static Resource getRoomForResource(Resource res, MemoryResourcePreAnalysis preData) {
 		String path = res.getPath();
