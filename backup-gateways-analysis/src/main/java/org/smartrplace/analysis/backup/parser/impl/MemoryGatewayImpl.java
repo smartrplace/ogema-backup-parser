@@ -274,6 +274,8 @@ class MemoryGatewayImpl implements MemoryGateway {
 		for(Class<? extends org.ogema.core.model.Resource> type: deviceTypes) {
 			deviceTypeNames.add(type.getName());
 			deviceTypeNames.add("de.iwes.ogema.bacnet.models.BACnetDevice");
+			deviceTypeNames.add("org.smartrplace.iotawatt.ogema.resources.IotaWattElectricityConnection");
+			deviceTypeNames.add("org.smartrplace.iotawatt.ogema.resources.IotaWattConnection");
 		}
 	}
 	
