@@ -51,7 +51,7 @@ public class BackupAnalysis implements GatewayBackupAnalysis {
 		final String path = path0 != null ? path0 : "ogemaCollect/rest";
 		basePath = Paths.get(path);
 		controller = new GatewaysController(backupParser, ctx, basePath);
-System.out.println("Reading remote slotsdb from "+path);		
+System.out.println("    ****    Reading remote slotsdb from "+path+" found "+controller.getIds().size()+" IDs");
 	}
 	
 	@Deactivate
