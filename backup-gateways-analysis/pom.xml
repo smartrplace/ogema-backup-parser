@@ -11,6 +11,7 @@
 
 	<artifactId>backup-gateways-analysis</artifactId>
 	<name>Backup gateways analysis</name>
+	<version>0.0.3-SNAPSHOT</version>
 	<description>Parses OGEMA gateway resource dumps and log data</description>
 	<packaging>bundle</packaging>
 

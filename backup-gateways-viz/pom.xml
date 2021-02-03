@@ -10,6 +10,7 @@
     </parent>
 
 	<artifactId>backup-gateways-viz</artifactId>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>Backup gateways analysis visualization</name>
 	<packaging>bundle</packaging>
 
