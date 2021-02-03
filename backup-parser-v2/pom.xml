@@ -11,6 +11,7 @@
 
 	<artifactId>backup-parser-v2</artifactId>
 	<name>Backup parser</name>
+	<version>0.0.3-SNAPSHOT</version>
 	<description>Parses OGEMA resource graph dumps (in XML format)</description>
 	<packaging>bundle</packaging>
 
