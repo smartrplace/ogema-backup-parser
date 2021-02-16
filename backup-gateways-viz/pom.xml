@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>org.smartrplace.analysis</groupId>
 			<artifactId>backup-gateways-analysis</artifactId>
-			<version>${project.version}</version>
+			<version>0.0.3-SNAPSHOT</version>
 		</dependency>    
 	</dependencies>
 
