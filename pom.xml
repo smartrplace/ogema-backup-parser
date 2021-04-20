@@ -30,7 +30,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<osgi.version>5.0.0</osgi.version>
-		<ogema.api.version>2.2.0</ogema.api.version>
+		<ogema.api.version>2.2.2-SNAPSHOT</ogema.api.version>
 		<ogema.widgets.version>2.2.0</ogema.widgets.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>

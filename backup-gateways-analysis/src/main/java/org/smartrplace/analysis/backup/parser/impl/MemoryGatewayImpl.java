@@ -41,6 +41,7 @@ import org.ogema.model.devices.sensoractordevices.SingleSwitchBox;
 import org.ogema.model.devices.storage.ChargingPoint;
 import org.ogema.model.devices.storage.ElectricityChargingStation;
 import org.ogema.model.locations.Room;
+import org.ogema.model.metering.special.FlowProbe;
 import org.ogema.model.prototypes.PhysicalElement;
 import org.ogema.model.sensors.DoorWindowSensor;
 import org.ogema.model.sensors.HumiditySensor;
@@ -268,7 +269,7 @@ class MemoryGatewayImpl implements MemoryGateway {
 					HumiditySensor.class, OccupancySensor.class, SensorDevice.class, 
 					SingleSwitchBox.class, RemoteControl.class, DoorWindowSensor.class,
 					AirConditioner.class, ElectricityConnectionBox.class,
-					ElectricityChargingStation.class, PVPlant.class, ChargingPoint.class);
+					ElectricityChargingStation.class, PVPlant.class, ChargingPoint.class, FlowProbe.class);
 	private static final List<String> deviceTypeNames = new ArrayList<>();
 	static {
 		for(Class<? extends org.ogema.core.model.Resource> type: deviceTypes) {
