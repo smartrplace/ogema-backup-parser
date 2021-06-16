@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
@@ -226,7 +227,17 @@ class MemoryGatewayImpl implements MemoryGateway {
 		synchronized (resources) {
 			if (devices != null) 
 				return Optional.of(devices);
-			devices = Collections.unmodifiableMap(MemoryResourceUtil.findResources(resources, resource -> 
+			if(Boolean.getBoolean("org.smartrplace.analysis.backup.parser.addnetworkTrafficData")) {
+				Map<String, Resource> modmap = MemoryResourceUtil.findResources(resources, resource -> 
+						deviceTypeNames.stream().collect(Collectors.toList()).contains(resource.getType()), true);
+				Map<String, Resource> addmap = Collections.unmodifiableMap(MemoryResourceUtil.findResources(resources, resource -> 
+					deviceNetworkNames.stream().collect(Collectors.toList()).contains(resource.getName()), true));
+				for(Entry<String, Resource> e: addmap.entrySet()) {
+					modmap.put(e.getKey(), e.getValue());
+				}
+				devices = Collections.unmodifiableMap(modmap);
+			} else
+				devices = Collections.unmodifiableMap(MemoryResourceUtil.findResources(resources, resource -> 
 					deviceTypeNames.stream().collect(Collectors.toList()).contains(resource.getType()), true));
 					//deviceTypes.stream().map(clzz -> clzz.getName()).collect(Collectors.toList()).contains(resource.getType()), true));
 		}
@@ -271,12 +282,16 @@ class MemoryGatewayImpl implements MemoryGateway {
 					AirConditioner.class, ElectricityConnectionBox.class,
 					ElectricityChargingStation.class, PVPlant.class, ChargingPoint.class, FlowProbe.class);
 	private static final List<String> deviceTypeNames = new ArrayList<>();
+	private static final List<String> deviceNetworkNames = new ArrayList<>();
 	static {
 		for(Class<? extends org.ogema.core.model.Resource> type: deviceTypes) {
 			deviceTypeNames.add(type.getName());
 			deviceTypeNames.add("de.iwes.ogema.bacnet.models.BACnetDevice");
 			deviceTypeNames.add("org.smartrplace.iotawatt.ogema.resources.IotaWattElectricityConnection");
 			deviceTypeNames.add("org.smartrplace.iotawatt.ogema.resources.IotaWattConnection");
+			
+			deviceNetworkNames.add("Gateway_Device");
+			deviceNetworkNames.add("NetworkTrafficData");
 		}
 	}
 	
