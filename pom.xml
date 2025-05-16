@@ -46,6 +46,7 @@
 		<module>backup-parser-v2</module>
 		<module>backup-gateways-analysis</module>
 		<module>backup-gateways-viz</module>
+		<module>gateway-backup-loader</module>
 		<module>memory-gateway-visualisation</module>
 	</modules>
 
