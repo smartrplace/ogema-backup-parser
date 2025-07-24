@@ -213,8 +213,10 @@ public class TransientResourceDB implements ResourceDB {
 	public List<Class<? extends Resource>> getResourceTypesInstalled(Class<? extends Resource> cls) {
 		//List<Class<? extends Resource>> rval = new ArrayList<>();
 		List<Class<? extends Resource>> rval = types.keySet().stream().filter(c -> cls.isAssignableFrom(c)).collect(Collectors.toList());
+		/*
 		System.out.printf("types matching %s out of %d installed types: %s%n",
 				cls.getCanonicalName(), types.size(), rval);
+				*/
 		return rval;
 		//return null;
 	}
