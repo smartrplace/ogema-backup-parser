@@ -183,7 +183,7 @@ public class TransientResourceDB implements ResourceDB {
 
 	@Override
 	public Collection<TreeElement> getFilteredNodes(Map<String, String> dict) {
-		System.out.println("----------- !!! getFilteredNodes !!! " + dict);
+		//System.out.println("----------- !!! getFilteredNodes !!! " + dict);
 		if (dict.containsKey("type")) {
 			String clsName = dict.get("type");
 			try {

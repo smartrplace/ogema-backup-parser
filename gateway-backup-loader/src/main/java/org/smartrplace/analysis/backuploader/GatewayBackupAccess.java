@@ -70,7 +70,7 @@ public class GatewayBackupAccess implements Application {
 	public void start(ApplicationManager am) {
 		appman = am;
 		reg = ctx.getBundleContext().registerService(GatewayBackupAccess.class, this, null);
-		System.out.println("started");
+		//System.out.println("started");
 	}
 
 	void importZipBackup(SerializationManager sman, Path zipFile) throws IOException {
@@ -97,13 +97,6 @@ public class GatewayBackupAccess implements Application {
 				}
 			});
 		}
-		/*
-		for (Path serializedResourceFile : filesToImport) {
-			try (BufferedReader r = Files.newBufferedReader(serializedResourceFile, StandardCharsets.UTF_8)) {
-				sman.createFromJson(r);
-			}
-		}
-		 */
 	}
 
 	/**
