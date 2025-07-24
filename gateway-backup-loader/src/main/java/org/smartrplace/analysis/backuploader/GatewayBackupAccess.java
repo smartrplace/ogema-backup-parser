@@ -106,6 +106,10 @@ public class GatewayBackupAccess implements Application {
 		 */
 	}
 
+	/**
+	 * @param gwPath path to search for backups
+	 * @return backup data from latest backup found at path, or null if no backup was found
+	 */
 	public GatewayBackupData getLatest(Path gwPath) throws IOException {
 		Comparator<Path> filetime = (p1, p2) -> {
 			try {
@@ -118,7 +122,10 @@ public class GatewayBackupAccess implements Application {
 			String fname = p.getFileName().toString();
 			return fname.startsWith("generalBackup") && fname.endsWith(".zip");
 		}, FileVisitOption.FOLLOW_LINKS).sorted(filetime.reversed()).findFirst();
-		System.out.println(latestBackup);
+		//System.out.println(latestBackup);
+		if (!latestBackup.isPresent()) {
+			return null;
+		}
 		long now = System.currentTimeMillis();
 		Path slotsDbPath = gwPath.resolve("slotsdb");
 		CloseableDataRecorder dataRecorder = fendoFac.getInstance(slotsDbPath, org.smartrplace.logging.fendodb.FendoDbConfigurationBuilder.getInstance()
